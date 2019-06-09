@@ -279,6 +279,24 @@ Transaction.prototype.getManager = function(account_) {
 };
 
 /**
+ * Get keypair for signing.
+ *
+ * @param [String] account
+ */
+Transaction.prototype.getKeyPair =
+Transaction.prototype._accountKeyPair = function(account) {
+  if (!this.remote) {
+    return void(0);
+  }
+
+  if (!account) {
+    account = this.tx_json.Account;
+  }
+
+  return this.remote.keyPairs[account];
+}
+
+/**
  * Get transaction secret
  *
  * @param [String] account
@@ -375,26 +393,20 @@ Transaction.prototype.complete = function() {
     }
   }
 
-  if (!this._secret) {
-    this._secret = this.getSecret();
-  }
-
   // Try to auto-fill the secret
-  if (!this._secret) {
+  if (!this._keyPair && !(this._keyPair = this.getKeyPair()) && 
+      !this._secret && !(this._secret = this.getSecret())) {
     this.emit('error', new RippleError('tejSecretUnknown', 'Missing secret'));
     return false;
   }
 
   if (typeof this.tx_json.SigningPubKey === 'undefined') {
-    try {
-      const seed = Seed.from_json(this._secret);
-      const key = seed.get_key(this.tx_json.Account);
-      this.tx_json.SigningPubKey = key.to_hex_pub();
-    } catch(e) {
-      this.emit('error', new RippleError(
-        'tejSecretInvalid', 'Invalid secret'));
+    var key = this._keyPair;
+    if (!key && this.remote && !(key = this.remote.generateKeyPair(this._secret))) {
+      this.emit('error', new RippleError('tejSecretInvalid', 'Invalid secret'));
       return false;
     }
+    this.tx_json.SigningPubKey = key.to_hex_pub();
   }
 
   // If the Fee hasn't been set, one needs to be computed by
@@ -452,7 +464,6 @@ Transaction.prototype.hash = function(prefix_, asUINT256, serialized) {
 };
 
 Transaction.prototype.sign = function(testnet) {
-  const seed = Seed.from_json(this._secret);
   const prev_sig = this.tx_json.TxnSignature;
 
   delete this.tx_json.TxnSignature;
@@ -465,7 +476,11 @@ Transaction.prototype.sign = function(testnet) {
     return this;
   }
 
-  const key = seed.get_key(this.tx_json.Account);
+  var key = this._keyPair || this.getKeyPair(); 
+  if (!key && this.remote && !(key = this.remote.generateKeyPair(this._secret))) {
+    this.emit('error', new RippleError('tejSecretInvalid', 'Invalid secret'));
+    return false;      
+  }
   const sig = key.sign(hash);
   const hex = sjcl.codec.hex.fromBits(sig).toUpperCase();
 
