@@ -35680,9 +35680,9 @@ var ripple =
 	    self.requestTransferRate(callback);
 	  }, function (callback) {
 	    self.requestOffers(callback, true);
-	  }, function (callback) {
+	  }/* , function (callback) {
 	    self.subscribeTransactions(callback);
-	  }];
+	  } */];
 
 	  async.series(steps);
 	};
