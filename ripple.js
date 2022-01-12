@@ -11624,7 +11624,7 @@ var ripple =
 	        i++;
 	        // If the hash is equal to or greater than the SECp256k1 order, increment sequenceuence and try agin
 	      } while (!sjcl.ecc.curves.c256.r.greaterEquals(privateGenerator));
-	      return privateGenerator; 
+	      return privateGenerator;
 	    },
 
 	    getPublicGenerator: function (){
@@ -11642,7 +11642,7 @@ var ripple =
 	        i++;
 	        // If the hash is equal to or greater than the SECp256k1 order, increment the sequenceuence and retry
 	      } while (!sjcl.ecc.curves.c256.r.greaterEquals(sec));
-	      // Treating this hash as a private key, compute the corresponding public key as an EC point. 
+	      // Treating this hash as a private key, compute the corresponding public key as an EC point.
 	      return sjcl.ecc.curves.c256.G.mult(sec).toJac().add(publicGenerator).toAffine();
 	    },
 
@@ -11661,14 +11661,14 @@ var ripple =
 	  };
 
 	  RippleWallet.generate = function() {
-	    /* Generate a 128-bit master key that can be used to make 
+	    /* Generate a 128-bit master key that can be used to make
 	       any number of private / public key pairs and accounts
 	    */
 	    var secretKey = MasterKey.getRandom().value;
 	    var wallet = new RippleWallet(secretKey);
 	    return {
 	      address: wallet.getAddress().value,
-	      secret: secretKey 
+	      secret: secretKey
 	    };
 	  };
 
@@ -24819,7 +24819,7 @@ var ripple =
 	    root._ = _;
 	  }
 	}.call(this));
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(95)(module), (function() { return this; }())))
 
 /***/ },
@@ -25496,7 +25496,7 @@ var ripple =
 	function hasOwnProperty(obj, prop) {
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(64)))
 
 /***/ },
@@ -26009,7 +26009,7 @@ var ripple =
 	  }
 	  return keys;
 	};
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
@@ -27904,7 +27904,7 @@ var ripple =
 	  }
 	  return i
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer, (function() { return this; }())))
 
 /***/ },
@@ -28024,7 +28024,7 @@ var ripple =
 /* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+
 	module.exports = function(options) {
 	  var sjcl = options.sjcl;
 	  var base58 = __webpack_require__(44)({ sjcl: sjcl });
@@ -28067,7 +28067,7 @@ var ripple =
 /* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+
 	module.exports = function(options) { // inject sjcl dependency
 	  var sjcl = options.sjcl
 	  var base58 = __webpack_require__(44)({ sjcl: sjcl });
@@ -28082,7 +28082,7 @@ var ripple =
 	  }
 
 	  RippleAddress.fromPublicKey = function(publicKey){
-	    /* Encode the EC public key as a ripple address 
+	    /* Encode the EC public key as a ripple address
 	       using SHA256 and then RIPEMD160
 	    */
 	    var publicKeyBytes = sjcl.codec.bytes.fromBits(SHA256_RIPEMD160(sjcl.codec.bytes.toBits(publicKey.toBytesCompressed())));
@@ -28098,18 +28098,18 @@ var ripple =
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(options) { // inject sjcl dependency
-	  var sjcl = options.sjcl; 
+	  var sjcl = options.sjcl;
 
 	  function PublicGenerator(eccPoint) {
 	    if (eccPoint instanceof sjcl.ecc.point) {
 	      this.value = eccPoint;
 	    } else {
-	      throw new Error('eccPoint must be a sjcl.ecc.point'); 
+	      throw new Error('eccPoint must be a sjcl.ecc.point');
 	    }
 	  }
 
 	  PublicGenerator.fromPrivateGenerator = function(privateGenerator) {
-	    /* Compute the public generator using from the 
+	    /* Compute the public generator using from the
 	       private generator on the elliptic curve
 	    */
 	    return new this(sjcl.ecc.curves.c256.G.mult(privateGenerator));
@@ -29253,7 +29253,7 @@ var ripple =
 	    }
 
 	}());
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(64), __webpack_require__(73).setImmediate))
 
 /***/ },
@@ -29997,13 +29997,13 @@ var ripple =
 
 	  /** @namespace Key exchange functions.  Right now only SRP is implemented. */
 	  keyexchange: {},
-	  
+
 	  /** @namespace Block cipher modes of operation. */
 	  mode: {},
 
 	  /** @namespace Miscellaneous.  HMAC and PBKDF2. */
 	  misc: {},
-	  
+
 	  /**
 	   * @namespace Bit array encoders and decoders.
 	   *
@@ -30014,7 +30014,7 @@ var ripple =
 	   * the method names are "fromBits" and "toBits".
 	   */
 	  codec: {},
-	  
+
 	  /** @namespace Exceptions. */
 	  exception: {
 	    /** @constructor Ciphertext is corrupt. */
@@ -30022,13 +30022,13 @@ var ripple =
 	      this.toString = function() { return "CORRUPT: "+this.message; };
 	      this.message = message;
 	    },
-	    
+
 	    /** @constructor Invalid parameter. */
 	    invalid: function(message) {
 	      this.toString = function() { return "INVALID: "+this.message; };
 	      this.message = message;
 	    },
-	    
+
 	    /** @constructor Bug or missing feature in SJCL. @constructor */
 	    bug: function(message) {
 	      this.toString = function() { return "BUG: "+this.message; };
@@ -30081,36 +30081,36 @@ var ripple =
 	  if (!this._tables[0][0][0]) {
 	    this._precompute();
 	  }
-	  
+
 	  var i, j, tmp,
 	    encKey, decKey,
 	    sbox = this._tables[0][4], decTable = this._tables[1],
 	    keyLen = key.length, rcon = 1;
-	  
+
 	  if (keyLen !== 4 && keyLen !== 6 && keyLen !== 8) {
 	    throw new sjcl.exception.invalid("invalid aes key size");
 	  }
-	  
+
 	  this._key = [encKey = key.slice(0), decKey = []];
-	  
+
 	  // schedule encryption keys
 	  for (i = keyLen; i < 4 * keyLen + 28; i++) {
 	    tmp = encKey[i-1];
-	    
+
 	    // apply sbox
 	    if (i%keyLen === 0 || (keyLen === 8 && i%keyLen === 4)) {
 	      tmp = sbox[tmp>>>24]<<24 ^ sbox[tmp>>16&255]<<16 ^ sbox[tmp>>8&255]<<8 ^ sbox[tmp&255];
-	      
+
 	      // shift rows and add rcon
 	      if (i%keyLen === 0) {
 	        tmp = tmp<<8 ^ tmp>>>24 ^ rcon<<24;
 	        rcon = rcon<<1 ^ (rcon>>7)*283;
 	      }
 	    }
-	    
+
 	    encKey[i] = encKey[i-keyLen] ^ tmp;
 	  }
-	  
+
 	  // schedule decryption keys
 	  for (j = 0; i; j++, i--) {
 	    tmp = encKey[j&3 ? i : i - 4];
@@ -30132,21 +30132,21 @@ var ripple =
 	  blockSize: 4,
 	  keySizes: [4,6,8],
 	  */
-	  
+
 	  /**
 	   * Encrypt an array of 4 big-endian words.
 	   * @param {Array} data The plaintext.
 	   * @return {Array} The ciphertext.
 	   */
 	  encrypt:function (data) { return this._crypt(data,0); },
-	  
+
 	  /**
 	   * Decrypt an array of 4 big-endian words.
 	   * @param {Array} data The ciphertext.
 	   * @return {Array} The plaintext.
 	   */
 	  decrypt:function (data) { return this._crypt(data,1); },
-	  
+
 	  /**
 	   * The expanded S-box and inverse S-box tables.  These will be computed
 	   * on the client so that we don't have to send them down the wire.
@@ -30175,32 +30175,32 @@ var ripple =
 	   for (i = 0; i < 256; i++) {
 	     th[( d[i] = i<<1 ^ (i>>7)*283 )^i]=i;
 	   }
-	   
+
 	   for (x = xInv = 0; !sbox[x]; x ^= x2 || 1, xInv = th[xInv] || 1) {
 	     // Compute sbox
 	     s = xInv ^ xInv<<1 ^ xInv<<2 ^ xInv<<3 ^ xInv<<4;
 	     s = s>>8 ^ s&255 ^ 99;
 	     sbox[x] = s;
 	     sboxInv[s] = x;
-	     
+
 	     // Compute MixColumns
 	     x8 = d[x4 = d[x2 = d[x]]];
 	     tDec = x8*0x1010101 ^ x4*0x10001 ^ x2*0x101 ^ x*0x1010100;
 	     tEnc = d[s]*0x101 ^ s*0x1010100;
-	     
+
 	     for (i = 0; i < 4; i++) {
 	       encTable[i][x] = tEnc = tEnc<<24 ^ tEnc>>>8;
 	       decTable[i][s] = tDec = tDec<<24 ^ tDec>>>8;
 	     }
 	   }
-	   
+
 	   // Compactify.  Considerable speedup on Firefox.
 	   for (i = 0; i < 5; i++) {
 	     encTable[i] = encTable[i].slice(0);
 	     decTable[i] = decTable[i].slice(0);
 	   }
 	  },
-	  
+
 	  /**
 	   * Encryption and decryption core.
 	   * @param {Array} input Four words to be encrypted or decrypted.
@@ -30212,7 +30212,7 @@ var ripple =
 	    if (input.length !== 4) {
 	      throw new sjcl.exception.invalid("invalid aes block size");
 	    }
-	    
+
 	    var key = this._key[dir],
 	        // state variables a,b,c,d are loaded with pre-whitened data
 	        a = input[0]           ^ key[0],
@@ -30220,20 +30220,20 @@ var ripple =
 	        c = input[2]           ^ key[2],
 	        d = input[dir ? 1 : 3] ^ key[3],
 	        a2, b2, c2,
-	        
+
 	        nInnerRounds = key.length/4 - 2,
 	        i,
 	        kIndex = 4,
 	        out = [0,0,0,0],
 	        table = this._tables[dir],
-	        
+
 	        // load up the tables
 	        t0    = table[0],
 	        t1    = table[1],
 	        t2    = table[2],
 	        t3    = table[3],
 	        sbox  = table[4];
-	 
+
 	    // Inner rounds.  Cribbed from OpenSSL.
 	    for (i = 0; i < nInnerRounds; i++) {
 	      a2 = t0[a>>>24] ^ t1[b>>16 & 255] ^ t2[c>>8 & 255] ^ t3[d & 255] ^ key[kIndex];
@@ -30243,18 +30243,18 @@ var ripple =
 	      kIndex += 4;
 	      a=a2; b=b2; c=c2;
 	    }
-	        
+
 	    // Last round.
 	    for (i = 0; i < 4; i++) {
 	      out[dir ? 3&-i : i] =
-	        sbox[a>>>24      ]<<24 ^ 
+	        sbox[a>>>24      ]<<24 ^
 	        sbox[b>>16  & 255]<<16 ^
 	        sbox[c>>8   & 255]<<8  ^
 	        sbox[d      & 255]     ^
 	        key[kIndex++];
 	      a2=a; a=b; b=c; c=d; d=a2;
 	    }
-	    
+
 	    return out;
 	  }
 	};
@@ -30334,7 +30334,7 @@ var ripple =
 	    if (a1.length === 0 || a2.length === 0) {
 	      return a1.concat(a2);
 	    }
-	    
+
 	    var last = a1[a1.length-1], shift = sjcl.bitArray.getPartial(last);
 	    if (shift === 32) {
 	      return a1.concat(a2);
@@ -30420,7 +30420,7 @@ var ripple =
 	  _shiftRight: function (a, shift, carry, out) {
 	    var i, last2=0, shift2;
 	    if (out === undefined) { out = []; }
-	    
+
 	    for (; shift >= 32; shift -= 32) {
 	      out.push(carry);
 	      carry = 0;
@@ -30428,7 +30428,7 @@ var ripple =
 	    if (shift === 0) {
 	      return out.concat(a);
 	    }
-	    
+
 	    for (i=0; i<a.length; i++) {
 	      out.push(carry | a[i]>>>shift);
 	      carry = a[i] << (32-shift);
@@ -30438,7 +30438,7 @@ var ripple =
 	    out.push(sjcl.bitArray.partial(shift+shift2 & 31, (shift + shift2 > 32) ? carry : out.pop(),1));
 	    return out;
 	  },
-	  
+
 	  /** xor a block of 4 words together.
 	   * @private
 	   */
@@ -30466,7 +30466,7 @@ var ripple =
 	 * @author Mike Hamburg
 	 * @author Dan Boneh
 	 */
-	 
+
 	/** @namespace UTF-8 strings */
 	sjcl.codec.utf8String = {
 	  /** Convert from a bitArray to a UTF-8 string. */
@@ -30481,7 +30481,7 @@ var ripple =
 	    }
 	    return decodeURIComponent(escape(out));
 	  },
-	  
+
 	  /** Convert from a UTF-8 string to a bitArray. */
 	  toBits: function (str) {
 	    str = unescape(encodeURIComponent(str));
@@ -30547,7 +30547,7 @@ var ripple =
 	  BASE: 5,
 	  /* bits - base */
 	  REMAINING: 27,
-	  
+
 	  /** Convert from a bitArray to a base32 string. */
 	  fromBits: function (arr, _noEquals) {
 	    var BITS = sjcl.codec.base32.BITS, BASE = sjcl.codec.base32.BASE, REMAINING = sjcl.codec.base32.REMAINING;
@@ -30567,7 +30567,7 @@ var ripple =
 
 	    return out;
 	  },
-	  
+
 	  /** Convert from a base32 string to a bitArray */
 	  toBits: function(str) {
 	    var BITS = sjcl.codec.base32.BITS, BASE = sjcl.codec.base32.BASE, REMAINING = sjcl.codec.base32.REMAINING;
@@ -30606,7 +30606,7 @@ var ripple =
 	   * @private
 	   */
 	  _chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-	  
+
 	  /** Convert from a bitArray to a base64 string. */
 	  fromBits: function (arr, _noEquals, _url) {
 	    var out = "", i, bits=0, c = sjcl.codec.base64._chars, ta=0, bl = sjcl.bitArray.bitLength(arr);
@@ -30627,7 +30627,7 @@ var ripple =
 	    while ((out.length & 3) && !_noEquals) { out += "="; }
 	    return out;
 	  },
-	  
+
 	  /** Convert from a base64 string to a bitArray */
 	  toBits: function(str, _url) {
 	    str = str.replace(/\s|=/g,'');
@@ -30744,7 +30744,7 @@ var ripple =
 	   * @constant
 	   */
 	  blockSize: 512,
-	   
+
 	  /**
 	   * Reset the hash state.
 	   * @return this
@@ -30755,7 +30755,7 @@ var ripple =
 	    this._length = 0;
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Input several words to the hash.
 	   * @param {bitArray|String} data the data to hash.
@@ -30773,7 +30773,7 @@ var ripple =
 	    }
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Complete hashing and output the hash value.
 	   * @return {bitArray} The hash value, an array of 8 big-endian words.
@@ -30783,12 +30783,12 @@ var ripple =
 
 	    // Round out and push the buffer
 	    b = sjcl.bitArray.concat(b, [sjcl.bitArray.partial(1,1)]);
-	    
+
 	    // Round out the buffer to a multiple of 16 words, less the 2 length words.
 	    for (i = b.length + 2; i & 15; i++) {
 	      b.push(0);
 	    }
-	    
+
 	    // append the length
 	    b.push(Math.floor(this._length / 0x100000000));
 	    b.push(this._length | 0);
@@ -30809,7 +30809,7 @@ var ripple =
 	  /*
 	  _init:[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],
 	  */
-	  
+
 	  /**
 	   * The SHA-256 hash key, to be precomputed.
 	   * @private
@@ -30844,7 +30844,7 @@ var ripple =
 	          continue outer;
 	        }
 	      }
-	      
+
 	      if (i<8) {
 	        this._init[i] = frac(Math.pow(prime, 1/2));
 	      }
@@ -30852,13 +30852,13 @@ var ripple =
 	      i++;
 	    }
 	  },
-	  
+
 	  /**
 	   * Perform one cycle of SHA-256.
 	   * @param {bitArray} words one block of words.
 	   * @private
 	   */
-	  _block:function (words) {  
+	  _block:function (words) {
 	    var i, tmp, a, b,
 	      w = words.slice(0),
 	      h = this._h,
@@ -30886,13 +30886,13 @@ var ripple =
 	      } else {
 	        a   = w[(i+1 ) & 15];
 	        b   = w[(i+14) & 15];
-	        tmp = w[i&15] = ((a>>>7  ^ a>>>18 ^ a>>>3  ^ a<<25 ^ a<<14) + 
+	        tmp = w[i&15] = ((a>>>7  ^ a>>>18 ^ a>>>3  ^ a<<25 ^ a<<14) +
 	                         (b>>>17 ^ b>>>19 ^ b>>>10 ^ b<<15 ^ b<<13) +
 	                         w[i&15] + w[(i+9) & 15]) | 0;
 	      }
-	      
+
 	      tmp = (tmp + h7 + (h4>>>6 ^ h4>>>11 ^ h4>>>25 ^ h4<<26 ^ h4<<21 ^ h4<<7) +  (h6 ^ h4&(h5^h6)) + k[i]); // | 0;
-	      
+
 	      // shift register
 	      h7 = h6; h6 = h5; h5 = h4;
 	      h4 = h3 + tmp | 0;
@@ -30960,7 +30960,7 @@ var ripple =
 	   * @constant
 	   */
 	  blockSize: 1024,
-	   
+
 	  /**
 	   * Reset the hash state.
 	   * @return this
@@ -30971,7 +30971,7 @@ var ripple =
 	    this._length = 0;
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Input several words to the hash.
 	   * @param {bitArray|String} data the data to hash.
@@ -30989,7 +30989,7 @@ var ripple =
 	    }
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Complete hashing and output the hash value.
 	   * @return {bitArray} The hash value, an array of 16 big-endian words.
@@ -31300,7 +31300,7 @@ var ripple =
 	   * @constant
 	   */
 	  blockSize: 512,
-	   
+
 	  /**
 	   * Reset the hash state.
 	   * @return this
@@ -31311,7 +31311,7 @@ var ripple =
 	    this._length = 0;
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Input several words to the hash.
 	   * @param {bitArray|String} data the data to hash.
@@ -31330,7 +31330,7 @@ var ripple =
 	    }
 	    return this;
 	  },
-	  
+
 	  /**
 	   * Complete hashing and output the hash value.
 	   * @return {bitArray} The hash value, an array of 5 big-endian words. TODO
@@ -31392,18 +31392,18 @@ var ripple =
 	  _S:function(n, x) {
 	    return (x << n) | (x >>> 32-n);
 	  },
-	  
+
 	  /**
 	   * Perform one cycle of SHA-1.
 	   * @param {bitArray} words one block of words.
 	   * @private
 	   */
-	  _block:function (words) {  
+	  _block:function (words) {
 	    var t, tmp, a, b, c, d, e,
 	    w = words.slice(0),
 	    h = this._h;
-	   
-	    a = h[0]; b = h[1]; c = h[2]; d = h[3]; e = h[4]; 
+
+	    a = h[0]; b = h[1]; c = h[2]; d = h[3]; e = h[4];
 
 	    for (t=0; t<=79; t++) {
 	      if (t >= 16) {
@@ -31441,7 +31441,7 @@ var ripple =
 	   * @constant
 	   */
 	  name: "ccm",
-	  
+
 	  _progressListeners: [],
 
 	  listenProgress: function (cb) {
@@ -31476,25 +31476,25 @@ var ripple =
 	    var L, out = plaintext.slice(0), tag, w=sjcl.bitArray, ivl = w.bitLength(iv) / 8, ol = w.bitLength(out) / 8;
 	    tlen = tlen || 64;
 	    adata = adata || [];
-	    
+
 	    if (ivl < 7) {
 	      throw new sjcl.exception.invalid("ccm: iv must be at least 7 bytes");
 	    }
-	    
+
 	    // compute the length of the length
 	    for (L=2; L<4 && ol >>> 8*L; L++) {}
 	    if (L < 15 - ivl) { L = 15-ivl; }
 	    iv = w.clamp(iv,8*(15-L));
-	    
+
 	    // compute the tag
 	    tag = sjcl.mode.ccm._computeTag(prf, plaintext, iv, adata, tlen, L);
-	    
+
 	    // encrypt
 	    out = sjcl.mode.ccm._ctrMode(prf, out, iv, tag, tlen, L);
-	    
+
 	    return w.concat(out.data, out.tag);
 	  },
-	  
+
 	  /** Decrypt in CCM mode.
 	   * @static
 	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
@@ -31510,31 +31510,31 @@ var ripple =
 	    var L,
 	        w=sjcl.bitArray,
 	        ivl = w.bitLength(iv) / 8,
-	        ol = w.bitLength(ciphertext), 
+	        ol = w.bitLength(ciphertext),
 	        out = w.clamp(ciphertext, ol - tlen),
 	        tag = w.bitSlice(ciphertext, ol - tlen), tag2;
-	    
+
 
 	    ol = (ol - tlen) / 8;
-	        
+
 	    if (ivl < 7) {
 	      throw new sjcl.exception.invalid("ccm: iv must be at least 7 bytes");
 	    }
-	    
+
 	    // compute the length of the length
 	    for (L=2; L<4 && ol >>> 8*L; L++) {}
 	    if (L < 15 - ivl) { L = 15-ivl; }
 	    iv = w.clamp(iv,8*(15-L));
-	    
+
 	    // decrypt
 	    out = sjcl.mode.ccm._ctrMode(prf, out, iv, tag, tlen, L);
-	    
+
 	    // check the tag
 	    tag2 = sjcl.mode.ccm._computeTag(prf, out.data, iv, adata, tlen, L);
 	    if (!w.equal(out.tag, tag2)) {
 	      throw new sjcl.exception.corrupt("ccm: tag doesn't match");
 	    }
-	    
+
 	    return out.data;
 	  },
 
@@ -31548,7 +31548,7 @@ var ripple =
 	    mac = w.concat(mac, iv);
 	    mac[3] |= ol;
 	    mac = prf.encrypt(mac);
-	  
+
 	    if (adata.length) {
 	      // mac the associated data.  start with its length...
 	      tmp = w.bitLength(adata)/8;
@@ -31557,7 +31557,7 @@ var ripple =
 	      } else if (tmp <= 0xFFFFFFFF) {
 	        macData = w.concat([w.partial(16,0xFFFE)], [tmp]);
 	      } // else ...
-	    
+
 	      // mac the data itself
 	      macData = w.concat(macData, adata);
 	      for (i=0; i<macData.length; i += 4) {
@@ -31582,12 +31582,12 @@ var ripple =
 	    var mac, i, w=sjcl.bitArray, xor = w._xor4;
 
 	    tlen /= 8;
-	  
+
 	    // check tag length and message length
 	    if (tlen % 2 || tlen < 4 || tlen > 16) {
 	      throw new sjcl.exception.invalid("ccm: invalid tag length");
 	    }
-	  
+
 	    if (adata.length > 0xFFFFFFFF || plaintext.length > 0xFFFFFFFF) {
 	      // I don't want to deal with extracting high words from doubles.
 	      throw new sjcl.exception.bug("ccm: can't deal with 4GiB or more data");
@@ -31620,13 +31620,13 @@ var ripple =
 
 	    // start the ctr
 	    ctr = w.concat([w.partial(8,L-1)],iv).concat([0,0,0]).slice(0,4);
-	    
+
 	    // en/decrypt the tag
 	    tag = w.bitSlice(xor(tag,prf.encrypt(ctr)), 0, tlen);
-	  
+
 	    // en/decrypt the data
 	    if (!l) { return {tag:tag, data:[]}; }
-	    
+
 	    for (i=0; i<l; i+=4) {
 	      if (i > n) {
 	        sjcl.mode.ccm._callProgressListener(i/l);
@@ -31666,7 +31666,7 @@ var ripple =
 	     * @constant
 	     */
 	    name: "cbc",
-	    
+
 	    /** Encrypt in CBC mode with PKCS#5 padding.
 	     * @param {Object} prp The block cipher.  It must have a block size of 16 bytes.
 	     * @param {bitArray} plaintext The plaintext data.
@@ -31692,13 +31692,13 @@ var ripple =
 	      if (bl&7) {
 	        throw new sjcl.exception.invalid("pkcs#5 padding only works for multiples of a byte");
 	      }
-	    
+
 	      for (i=0; bp+128 <= bl; i+=4, bp+=128) {
 	        /* Encrypt a non-final block */
 	        iv = prp.encrypt(xor(iv, plaintext.slice(i,i+4)));
 	        output.splice(i,0,iv[0],iv[1],iv[2],iv[3]);
 	      }
-	      
+
 	      /* Construct the pad. */
 	      bl = (16 - ((bl >> 3) & 15)) * 0x1010101;
 
@@ -31707,7 +31707,7 @@ var ripple =
 	      output.splice(i,0,iv[0],iv[1],iv[2],iv[3]);
 	      return output;
 	    },
-	    
+
 	    /** Decrypt in CBC mode.
 	     * @param {Object} prp The block cipher.  It must have a block size of 16 bytes.
 	     * @param {bitArray} ciphertext The ciphertext data.
@@ -31732,9 +31732,9 @@ var ripple =
 	          xor = w._xor4,
 	          bi, bo,
 	          output = [];
-	          
+
 	      adata = adata || [];
-	    
+
 	      for (i=0; i<ciphertext.length; i+=4) {
 	        bi = ciphertext.slice(i,i+4);
 	        bo = xor(iv,prp.decrypt(bi));
@@ -31777,7 +31777,7 @@ var ripple =
 	   * @constant
 	   */
 	  name: "ocb2",
-	  
+
 	  /** Encrypt in OCB mode, version 2.0.
 	   * @param {Object} prp The block cipher.  It must have a block size of 16 bytes.
 	   * @param {bitArray} plaintext The plaintext data.
@@ -31801,10 +31801,10 @@ var ripple =
 	        bi, bl,
 	        output = [],
 	        pad;
-	        
+
 	    adata = adata || [];
 	    tlen  = tlen || 64;
-	  
+
 	    for (i=0; i+4 < plaintext.length; i+=4) {
 	      /* Encrypt a non-final block */
 	      bi = plaintext.slice(i,i+4);
@@ -31812,25 +31812,25 @@ var ripple =
 	      output = output.concat(xor(delta,prp.encrypt(xor(delta, bi))));
 	      delta = times2(delta);
 	    }
-	    
+
 	    /* Chop out the final block */
 	    bi = plaintext.slice(i);
 	    bl = w.bitLength(bi);
 	    pad = prp.encrypt(xor(delta,[0,0,0,bl]));
 	    bi = w.clamp(xor(bi.concat([0,0,0]),pad), bl);
-	    
+
 	    /* Checksum the final block, and finalize the checksum */
 	    checksum = xor(checksum,xor(bi.concat([0,0,0]),pad));
 	    checksum = prp.encrypt(xor(checksum,xor(delta,times2(delta))));
-	    
+
 	    /* MAC the header */
 	    if (adata.length) {
 	      checksum = xor(checksum, premac ? adata : sjcl.mode.ocb2.pmac(prp, adata));
 	    }
-	    
+
 	    return output.concat(w.concat(bi, w.clamp(checksum, tlen)));
 	  },
-	  
+
 	  /** Decrypt in OCB mode.
 	   * @param {Object} prp The block cipher.  It must have a block size of 16 bytes.
 	   * @param {bitArray} ciphertext The ciphertext data.
@@ -31857,9 +31857,9 @@ var ripple =
 	        len = sjcl.bitArray.bitLength(ciphertext) - tlen,
 	        output = [],
 	        pad;
-	        
+
 	    adata = adata || [];
-	  
+
 	    for (i=0; i+4 < len/32; i+=4) {
 	      /* Decrypt a non-final block */
 	      bi = xor(delta, prp.decrypt(xor(delta, ciphertext.slice(i,i+4))));
@@ -31867,28 +31867,28 @@ var ripple =
 	      output = output.concat(bi);
 	      delta = times2(delta);
 	    }
-	    
+
 	    /* Chop out and decrypt the final block */
 	    bl = len-i*32;
 	    pad = prp.encrypt(xor(delta,[0,0,0,bl]));
 	    bi = xor(pad, w.clamp(ciphertext.slice(i),bl).concat([0,0,0]));
-	    
+
 	    /* Checksum the final block, and finalize the checksum */
 	    checksum = xor(checksum, bi);
 	    checksum = prp.encrypt(xor(checksum, xor(delta, times2(delta))));
-	    
+
 	    /* MAC the header */
 	    if (adata.length) {
 	      checksum = xor(checksum, premac ? adata : sjcl.mode.ocb2.pmac(prp, adata));
 	    }
-	    
+
 	    if (!w.equal(w.clamp(checksum, tlen), w.bitSlice(ciphertext, len))) {
 	      throw new sjcl.exception.corrupt("ocb: tag doesn't match");
 	    }
-	    
+
 	    return output.concat(w.clamp(bi,bl));
 	  },
-	  
+
 	  /** PMAC authentication for OCB associated data.
 	   * @param {Object} prp The block cipher.  It must have a block size of 16 bytes.
 	   * @param {bitArray} adata The authenticated data.
@@ -31901,14 +31901,14 @@ var ripple =
 	        checksum = [0,0,0,0],
 	        delta = prp.encrypt([0,0,0,0]),
 	        bi;
-	        
+
 	    delta = xor(delta,times2(times2(delta)));
-	 
+
 	    for (i=0; i+4<adata.length; i+=4) {
 	      delta = times2(delta);
 	      checksum = xor(checksum, prp.encrypt(xor(delta, adata.slice(i,i+4))));
 	    }
-	    
+
 	    bi = adata.slice(i);
 	    if (w.bitLength(bi) < 128) {
 	      delta = xor(delta,times2(delta));
@@ -31917,7 +31917,7 @@ var ripple =
 	    checksum = xor(checksum, bi);
 	    return prp.encrypt(xor(times2(xor(delta,times2(delta))), checksum));
 	  },
-	  
+
 	  /** Double a block of words, OCB style.
 	   * @private
 	   */
@@ -31939,7 +31939,7 @@ var ripple =
 	   * @constant
 	   */
 	  name: "gcm",
-	  
+
 	  /** Encrypt in GCM mode.
 	   * @static
 	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
@@ -31959,7 +31959,7 @@ var ripple =
 
 	    return w.concat(out.data, out.tag);
 	  },
-	  
+
 	  /** Decrypt in GCM mode.
 	   * @static
 	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
@@ -32132,12 +32132,12 @@ var ripple =
 	  if (key.length > bs) {
 	    key = Hash.hash(key);
 	  }
-	  
+
 	  for (i=0; i<bs; i++) {
 	    exKey[0][i] = key[i]^0x36363636;
 	    exKey[1][i] = key[i]^0x5C5C5C5C;
 	  }
-	  
+
 	  this._baseHash[0].update(exKey[0]);
 	  this._baseHash[1].update(exKey[1]);
 	  this._resultHash = new Hash(this._baseHash[0]);
@@ -32194,34 +32194,34 @@ var ripple =
 	 */
 	sjcl.misc.pbkdf2 = function (password, salt, count, length, Prff) {
 	  count = count || 1000;
-	  
+
 	  if (length < 0 || count < 0) {
 	    throw sjcl.exception.invalid("invalid params to pbkdf2");
 	  }
-	  
+
 	  if (typeof password === "string") {
 	    password = sjcl.codec.utf8String.toBits(password);
 	  }
-	  
+
 	  if (typeof salt === "string") {
 	    salt = sjcl.codec.utf8String.toBits(salt);
 	  }
-	  
+
 	  Prff = Prff || sjcl.misc.hmac;
-	  
+
 	  var prf = new Prff(password),
 	      u, ui, i, j, k, out = [], b = sjcl.bitArray;
 
 	  for (k = 1; 32 * out.length < (length || 1); k++) {
 	    u = ui = prf.encrypt(b.concat(salt,[k]));
-	    
+
 	    for (i=1; i<count; i++) {
 	      ui = prf.encrypt(ui);
 	      for (j=0; j<ui.length; j++) {
 	        u[j] ^= ui[j];
 	      }
 	    }
-	    
+
 	    out = out.concat(u);
 	  }
 
@@ -32273,17 +32273,17 @@ var ripple =
 	 * </p>
 	 */
 	sjcl.prng = function(defaultParanoia) {
-	  
+
 	  /* private */
 	  this._pools                   = [new sjcl.hash.sha256()];
 	  this._poolEntropy             = [0];
 	  this._reseedCount             = 0;
 	  this._robins                  = {};
 	  this._eventId                 = 0;
-	  
+
 	  this._collectorIds            = {};
 	  this._collectorIdNext         = 0;
-	  
+
 	  this._strength                = 0;
 	  this._poolStrength            = 0;
 	  this._nextReseed              = 0;
@@ -32291,12 +32291,12 @@ var ripple =
 	  this._counter                 = [0,0,0,0];
 	  this._cipher                  = undefined;
 	  this._defaultParanoia         = defaultParanoia;
-	  
+
 	  /* event listener stuff */
 	  this._collectorsStarted       = false;
 	  this._callbacks               = {progress: {}, seeded: {}};
 	  this._callbackI               = 0;
-	  
+
 	  /* constants */
 	  this._NOT_READY               = 0;
 	  this._READY                   = 1;
@@ -32307,7 +32307,7 @@ var ripple =
 	  this._MILLISECONDS_PER_RESEED = 30000;
 	  this._BITS_PER_RESEED         = 80;
 	};
-	 
+
 	sjcl.prng.prototype = {
 	  /** Generate several random words, and return them in an array.
 	   * A word consists of 32 bits (4 bytes)
@@ -32315,26 +32315,26 @@ var ripple =
 	   */
 	  randomWords: function (nwords, paranoia) {
 	    var out = [], i, readiness = this.isReady(paranoia), g;
-	  
+
 	    if (readiness === this._NOT_READY) {
 	      throw new sjcl.exception.notReady("generator isn't seeded");
 	    } else if (readiness & this._REQUIRES_RESEED) {
 	      this._reseedFromPools(!(readiness & this._READY));
 	    }
-	  
+
 	    for (i=0; i<nwords; i+= 4) {
 	      if ((i+1) % this._MAX_WORDS_PER_BURST === 0) {
 	        this._gate();
 	      }
-	   
+
 	      g = this._gen4words();
 	      out.push(g[0],g[1],g[2],g[3]);
 	    }
 	    this._gate();
-	  
+
 	    return out.slice(0,nwords);
 	  },
-	  
+
 	  setDefaultParanoia: function (paranoia, allowZeroParanoia) {
 	    if (paranoia === 0 && allowZeroParanoia !== "Setting paranoia=0 will ruin your security; use it only for testing") {
 	      throw "Setting paranoia=0 will ruin your security; use it only for testing";
@@ -32342,7 +32342,7 @@ var ripple =
 
 	    this._defaultParanoia = paranoia;
 	  },
-	  
+
 	  /**
 	   * Add entropy to the pools.
 	   * @param data The entropic value.  Should be a 32-bit integer, array of 32-bit integers, or string
@@ -32351,28 +32351,28 @@ var ripple =
 	   */
 	  addEntropy: function (data, estimatedEntropy, source) {
 	    source = source || "user";
-	  
+
 	    var id,
 	      i, tmp,
 	      t = (new Date()).valueOf(),
 	      robin = this._robins[source],
 	      oldReady = this.isReady(), err = 0, objName;
-	      
+
 	    id = this._collectorIds[source];
 	    if (id === undefined) { id = this._collectorIds[source] = this._collectorIdNext ++; }
-	      
+
 	    if (robin === undefined) { robin = this._robins[source] = 0; }
 	    this._robins[source] = ( this._robins[source] + 1 ) % this._pools.length;
-	  
+
 	    switch(typeof(data)) {
-	      
+
 	    case "number":
 	      if (estimatedEntropy === undefined) {
 	        estimatedEntropy = 1;
 	      }
 	      this._pools[robin].update([id,this._eventId++,1,estimatedEntropy,t,1,data|0]);
 	      break;
-	      
+
 	    case "object":
 	      objName = Object.prototype.toString.call(data);
 	      if (objName === "[object Uint32Array]") {
@@ -32406,7 +32406,7 @@ var ripple =
 	        this._pools[robin].update([id,this._eventId++,2,estimatedEntropy,t,data.length].concat(data));
 	      }
 	      break;
-	      
+
 	    case "string":
 	      if (estimatedEntropy === undefined) {
 	       /* English text has just over 1 bit per character of entropy.
@@ -32418,18 +32418,18 @@ var ripple =
 	      this._pools[robin].update([id,this._eventId++,3,estimatedEntropy,t,data.length]);
 	      this._pools[robin].update(data);
 	      break;
-	      
+
 	    default:
 	      err=1;
 	    }
 	    if (err) {
 	      throw new sjcl.exception.bug("random: addEntropy only supports number, array of numbers or string");
 	    }
-	  
+
 	    /* record the new strength */
 	    this._poolEntropy[robin] += estimatedEntropy;
 	    this._poolStrength += estimatedEntropy;
-	  
+
 	    /* fire off events */
 	    if (oldReady === this._NOT_READY) {
 	      if (this.isReady() !== this._NOT_READY) {
@@ -32438,11 +32438,11 @@ var ripple =
 	      this._fireEvent("progress", this.getProgress());
 	    }
 	  },
-	  
+
 	  /** Is the generator ready? */
 	  isReady: function (paranoia) {
 	    var entropyRequired = this._PARANOIA_LEVELS[ (paranoia !== undefined) ? paranoia : this._defaultParanoia ];
-	  
+
 	    if (this._strength && this._strength >= entropyRequired) {
 	      return (this._poolEntropy[0] > this._BITS_PER_RESEED && (new Date()).valueOf() > this._nextReseed) ?
 	        this._REQUIRES_RESEED | this._READY :
@@ -32453,11 +32453,11 @@ var ripple =
 	        this._NOT_READY;
 	    }
 	  },
-	  
+
 	  /** Get the generator's progress toward readiness, as a fraction */
 	  getProgress: function (paranoia) {
 	    var entropyRequired = this._PARANOIA_LEVELS[ paranoia ? paranoia : this._defaultParanoia ];
-	  
+
 	    if (this._strength >= entropyRequired) {
 	      return 1.0;
 	    } else {
@@ -32466,11 +32466,11 @@ var ripple =
 	        this._poolStrength / entropyRequired;
 	    }
 	  },
-	  
+
 	  /** start the built-in entropy collectors */
 	  startCollectors: function () {
 	    if (this._collectorsStarted) { return; }
-	  
+
 	    this._eventListener = {
 	      loadTimeCollector: this._bind(this._loadTimeCollector),
 	      mouseCollector: this._bind(this._mouseCollector),
@@ -32492,14 +32492,14 @@ var ripple =
 	    } else {
 	      throw new sjcl.exception.bug("can't attach event");
 	    }
-	  
+
 	    this._collectorsStarted = true;
 	  },
-	  
+
 	  /** stop the built-in entropy collectors */
 	  stopCollectors: function () {
 	    if (!this._collectorsStarted) { return; }
-	  
+
 	    if (window.removeEventListener) {
 	      window.removeEventListener("load", this._eventListener.loadTimeCollector, false);
 	      window.removeEventListener("mousemove", this._eventListener.mouseCollector, false);
@@ -32514,17 +32514,17 @@ var ripple =
 
 	    this._collectorsStarted = false;
 	  },
-	  
+
 	  /* use a cookie to store entropy.
 	  useCookie: function (all_cookies) {
 	      throw new sjcl.exception.bug("random: useCookie is unimplemented");
 	  },*/
-	  
+
 	  /** add an event listener for progress or seeded-ness. */
 	  addEventListener: function (name, callback) {
 	    this._callbacks[name][this._callbackI++] = callback;
 	  },
-	  
+
 	  /** remove an event listener for progress or seeded-ness */
 	  removeEventListener: function (name, cb) {
 	    var i, j, cbs=this._callbacks[name], jsTemp=[];
@@ -32544,7 +32544,7 @@ var ripple =
 	      delete cbs[j];
 	    }
 	  },
-	  
+
 	  _bind: function (func) {
 	    var that = this;
 	    return function () {
@@ -32562,7 +32562,7 @@ var ripple =
 	    }
 	    return this._cipher.encrypt(this._counter);
 	  },
-	  
+
 	  /* Rekey the AES instance with itself after a request, or every _MAX_WORDS_PER_BURST words.
 	   * @private
 	   */
@@ -32570,7 +32570,7 @@ var ripple =
 	    this._key = this._gen4words().concat(this._gen4words());
 	    this._cipher = new sjcl.cipher.aes(this._key);
 	  },
-	  
+
 	  /** Reseed the generator with the given words
 	   * @private
 	   */
@@ -32582,51 +32582,51 @@ var ripple =
 	      if (this._counter[i]) { break; }
 	    }
 	  },
-	  
+
 	  /** reseed the data from the entropy pools
 	   * @param full If set, use all the entropy pools in the reseed.
 	   */
 	  _reseedFromPools: function (full) {
 	    var reseedData = [], strength = 0, i;
-	  
+
 	    this._nextReseed = reseedData[0] =
 	      (new Date()).valueOf() + this._MILLISECONDS_PER_RESEED;
-	    
+
 	    for (i=0; i<16; i++) {
 	      /* On some browsers, this is cryptographically random.  So we might
 	       * as well toss it in the pot and stir...
 	       */
 	      reseedData.push(Math.random()*0x100000000|0);
 	    }
-	    
+
 	    for (i=0; i<this._pools.length; i++) {
 	     reseedData = reseedData.concat(this._pools[i].finalize());
 	     strength += this._poolEntropy[i];
 	     this._poolEntropy[i] = 0;
-	   
+
 	     if (!full && (this._reseedCount & (1<<i))) { break; }
 	    }
-	  
+
 	    /* if we used the last pool, push a new one onto the stack */
 	    if (this._reseedCount >= 1 << this._pools.length) {
 	     this._pools.push(new sjcl.hash.sha256());
 	     this._poolEntropy.push(0);
 	    }
-	  
+
 	    /* how strong was this reseed? */
 	    this._poolStrength -= strength;
 	    if (strength > this._strength) {
 	      this._strength = strength;
 	    }
-	  
+
 	    this._reseedCount ++;
 	    this._reseed(reseedData);
 	  },
-	  
+
 	  _keyboardCollector: function () {
 	    this._addCurrentTimeToEntropy(1);
 	  },
-	  
+
 	  _mouseCollector: function (ev) {
 	    var x, y;
 
@@ -32655,7 +32655,7 @@ var ripple =
 
 	    this._addCurrentTimeToEntropy(0);
 	  },
-	  
+
 	  _loadTimeCollector: function () {
 	    this._addCurrentTimeToEntropy(2);
 	  },
@@ -34122,7 +34122,7 @@ var ripple =
 	    "0xb3312fa7e23ee7e4988e056be3f82d19181d9c6efe8141120314088f5013875ac656398d8a2ed19d2a85c8edd3ec2aef",
 	    "0xaa87ca22be8b05378eb1c71ef320ad746e1d3b628ba79b9859f741e082542a385502f25dbf55296c3a545e3872760ab7",
 	    "0x3617de4a96262c6f5d9e98bf9292dc29f8f41dbd289a147ce9da3113b5f0b8c00a60b1ce1d7e819d7a431d7c90ea0e5f"),
-	    
+
 	  c521: new sjcl.ecc.curve(
 	    sjcl.bn.prime.p521,
 	    "0x1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA51868783BF2F966B7FCC0148F709A5D03BB5C9B8899C47AEBB6FB71E91386409",
@@ -34648,7 +34648,7 @@ var ripple =
 	    return sjcl.bitArray.concat(ct, encrypted_obj.tag);
 	  },
 
-	  /** Decrypt in CCM mode. Meant to imitate the bitArray ccm 
+	  /** Decrypt in CCM mode. Meant to imitate the bitArray ccm
 	   * @static
 	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
 	   * @param {bitArray} ciphertext The ciphertext data.
@@ -34660,9 +34660,9 @@ var ripple =
 	  compat_decrypt: function(prf, ciphertext, iv, adata, tlen){
 	    tlen = tlen || 64;
 	    adata = adata || [];
-	    var L, i, 
+	    var L, i,
 	        w=sjcl.bitArray,
-	        ol = w.bitLength(ciphertext), 
+	        ol = w.bitLength(ciphertext),
 	        out = w.clamp(ciphertext, ol - tlen),
 	        tag = w.bitSlice(ciphertext, ol - tlen), tag2,
 	        ciphertext_buffer = sjcl.codec.arrayBuffer.fromBits(out, true, 16);
@@ -34674,7 +34674,7 @@ var ripple =
 
 	  /** Really fast ccm encryption, uses arraybufer and mutates the plaintext buffer
 	   * @static
-	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes. 
+	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
 	   * @param {ArrayBuffer} plaintext_buffer The plaintext data.
 	   * @param {bitArray} iv The initialization value.
 	   * @param {ArrayBuffer} [adata=[]] The authenticated data.
@@ -34690,7 +34690,7 @@ var ripple =
 	    tlen = tlen || sjcl.arrayBuffer.ccm.defaults.tlen;
 	    ol = ol || plaintext_buffer.byteLength;
 	    tlen = Math.ceil(tlen/8);
-	    
+
 	    for (L=2; L<4 && ol >>> 8*L; L++) {}
 	    if (L < 15 - ivl) { L = 15-ivl; }
 	    iv = w.clamp(iv,8*(15-L));
@@ -34699,7 +34699,7 @@ var ripple =
 
 	    mac = sjcl.arrayBuffer.ccm._computeTag(prf, plaintext_buffer, iv, adata, tlen, ol, L);
 
-	    //encrypt the plaintext and the mac 
+	    //encrypt the plaintext and the mac
 	    //returns the mac since the plaintext will be left encrypted inside the buffer
 	    mac = sjcl.arrayBuffer.ccm._ctrMode(prf, plaintext_buffer, iv, mac, tlen, L);
 
@@ -34710,7 +34710,7 @@ var ripple =
 
 	  /** Really fast ccm decryption, uses arraybufer and mutates the given buffer
 	   * @static
-	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes. 
+	   * @param {Object} prf The pseudorandom function.  It must have a block size of 16 bytes.
 	   * @param {ArrayBuffer} ciphertext_buffer The Ciphertext data.
 	   * @param {bitArray} iv The initialization value.
 	   * @param {bitArray} The authentication tag for the ciphertext
@@ -34719,7 +34719,7 @@ var ripple =
 	   * @return {ArrayBuffer} The decrypted data, in the same array buffer as the given buffer, but given back anyways
 	   */
 	  decrypt: function(prf, ciphertext_buffer, iv, tag, adata, tlen, ol){
-	    var mac, mac2, i, L, w = sjcl.bitArray, 
+	    var mac, mac2, i, L, w = sjcl.bitArray,
 	      ivl = w.bitLength(iv) / 8;
 
 	    //set up defaults
@@ -34731,7 +34731,7 @@ var ripple =
 	    for (L=2; L<4 && ol >>> 8*L; L++) {}
 	    if (L < 15 - ivl) { L = 15-ivl; }
 	    iv = w.clamp(iv,8*(15-L));
-	    
+
 	    //prf should use a 256 bit key to make precomputation attacks infeasible
 
 	    //decrypt the buffer
@@ -34857,7 +34857,7 @@ var ripple =
 
 	/** @namespace ArrayBuffer */
 	sjcl.codec.arrayBuffer = {
-	  /** Convert from a bitArray to an ArrayBuffer. 
+	  /** Convert from a bitArray to an ArrayBuffer.
 	   * Will default to 8byte padding if padding is undefined*/
 	  fromBits: function (arr, padding, padding_count) {
 	    var out, i, ol, tmp, smallest;
@@ -34870,7 +34870,7 @@ var ripple =
 
 	    ol = sjcl.bitArray.bitLength(arr)/8;
 
-	    //check to make sure the bitLength is divisible by 8, if it isn't 
+	    //check to make sure the bitLength is divisible by 8, if it isn't
 	    //we can't do anything since arraybuffers work with bytes, not bits
 	    if ( sjcl.bitArray.bitLength(arr)%8 !== 0 ) {
 	      throw new sjcl.exception.invalid("Invalid bit size, must be divisble by 8 to fit in an arraybuffer correctly")
@@ -34922,11 +34922,11 @@ var ripple =
 	      tmp = new DataView(new ArrayBuffer(4));
 	      for (var i = 0, l = inView.byteLength%4; i < l; i++) {
 	        //we want the data to the right, because partial slices off the starting bits
-	        tmp.setUint8(i+4-l, inView.getUint8(len+i)); // big-endian, 
+	        tmp.setUint8(i+4-l, inView.getUint8(len+i)); // big-endian,
 	      }
 	      out.push(
 	        sjcl.bitArray.partial( (inView.byteLength%4)*8, tmp.getUint32(0) )
-	      ); 
+	      );
 	    }
 	    return out;
 	  },
@@ -35570,7 +35570,7 @@ var ripple =
 	            self._shouldSubscribe = true;
 	            self.subscribe();
 
-	            self._remote.on('transaction', onTransactionWrapper);
+	            // self._remote.on('transaction', onTransactionWrapper);
 	            self._remote.on('ledger_closed', onLedgerClosedWrapper);
 	            self._remote.once('disconnect', onDisconnect);
 
@@ -36230,7 +36230,7 @@ var ripple =
 	OrderBook.prototype.onTransaction = function (transaction) {
 	  this.updateFundedAmounts(transaction);
 
-	  if (--this._transactionsLeft === 0 && !this._waitingForOffers) {
+	//   if (--this._transactionsLeft === 0 && !this._waitingForOffers) {
 	    var lastClosedLedger = this._remote.getLedgerSequence() - 1;
 	    if (this._isAutobridgeable) {
 	      if (this._canRunAutobridgeCalc()) {
@@ -36243,7 +36243,7 @@ var ripple =
 	    } else if (this._offersModifiedAt === lastClosedLedger) {
 	      this.emit('model', this._offers);
 	    }
-	  }
+	//   }
 	};
 
 	/**
@@ -40443,7 +40443,7 @@ var ripple =
 	    error('sorry,', name, 'is not implemented yet')
 	  }
 	})
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -41075,7 +41075,7 @@ var ripple =
 	function hasOwnProperty(obj, prop) {
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(64)))
 
 /***/ },
@@ -42391,7 +42391,7 @@ var ripple =
 		}
 
 	}(this));
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(95)(module), (function() { return this; }())))
 
 /***/ },
@@ -42410,7 +42410,7 @@ var ripple =
 	      /* This will not work in older browsers.
 	       * See https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues
 	       */
-	    
+
 	      _crypto.getRandomValues(bytes);
 	      return bytes;
 	    }
@@ -42424,7 +42424,7 @@ var ripple =
 	      )
 	  }
 	}())
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(43).Buffer))
 
 /***/ },
@@ -42461,7 +42461,7 @@ var ripple =
 	  if('rmd160' === alg) return new rmd160()
 	  return createHash(alg)
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -42511,7 +42511,7 @@ var ripple =
 	  return createHash(this._alg).update(this._opad).update(h).digest(enc)
 	}
 
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -43344,7 +43344,7 @@ var ripple =
 	    pbkdf2Sync: pbkdf2Sync
 	  }
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -43572,7 +43572,7 @@ var ripple =
 	}
 
 
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -43687,7 +43687,7 @@ var ripple =
 	}
 
 	module.exports = { hash: hash };
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43).Buffer))
 
 /***/ },
@@ -43921,7 +43921,7 @@ var ripple =
 /* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+
 	/**
 	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
 	 * in FIPS 180-2
