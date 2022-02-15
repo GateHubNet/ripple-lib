@@ -1,12 +1,13 @@
 import * as _ from 'lodash'
 import * as assert from 'assert'
+
 import {constants} from '../../common'
-const AccountFlags = constants.AccountFlags
 import parseFields from './fields'
+const AccountFlags = constants.AccountFlags
 
 function getAccountRootModifiedNode(tx: any) {
   const modifiedNodes = tx.meta.AffectedNodes.filter(
-    (node) => node.ModifiedNode.LedgerEntryType === 'AccountRoot'
+    (node) => node.ModifiedNode?.LedgerEntryType === 'AccountRoot'
   )
   assert.ok(modifiedNodes.length === 1)
   return modifiedNodes[0].ModifiedNode
